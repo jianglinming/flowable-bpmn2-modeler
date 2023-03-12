@@ -26,6 +26,8 @@ import java.util.Map;
 public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomizeUserTaskJsonConverter.class);
 
+    private static final String NODE_STATE_KEY = "nodestate";
+    private static final String REQUIRE_PERMISSIONS_KEY= "requirepermissions";
     private static final String NODE_TYPE_KEY = "nodetype";
     private static final String REVOKE_FLAG_KEY = "revokeflag";
     private static final String END_FLAG_KEY = "endflag";
@@ -85,6 +87,8 @@ public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
             LOGGER.debug("userTaskId = {} 扩展属性 = {}", baseElement.getId(), baseElement.getAttributes());
             Map<String, List<ExtensionAttribute>> stringListMap = baseElement.getAttributes();
 
+            String nodestate = stringListMap.get(NODE_STATE_KEY).get(0).getValue();
+            String requirepermissions = stringListMap.get(REQUIRE_PERMISSIONS_KEY).get(0).getValue();
             String nodetype = stringListMap.get(NODE_TYPE_KEY).get(0).getValue();
             String revokeflag = stringListMap.get(REVOKE_FLAG_KEY).get(0).getValue();
             String endflag = stringListMap.get(END_FLAG_KEY).get(0).getValue();
@@ -94,6 +98,8 @@ public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
             shapesArrayNode.forEach(node -> {
                 if (baseElement.getId().equals(node.get(resourceId).textValue())) {
                     ObjectNode properties = (ObjectNode) node.get("properties");
+                    properties.set(NODE_STATE_KEY, new TextNode(nodestate));
+                    properties.set(REQUIRE_PERMISSIONS_KEY,new TextNode(requirepermissions));                    
                     properties.set(DUEDATE_FLAG_KEY, new TextNode(duedatedefinition));
                     properties.set(NODE_TYPE_KEY, new TextNode(nodetype));
                     properties.set(REVOKE_FLAG_KEY, BooleanNode.valueOf(Boolean.parseBoolean(revokeflag)));
@@ -102,7 +108,6 @@ public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
             });
         }
     }
-
 
     @Override
     protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode,
@@ -114,6 +119,24 @@ public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
                     "convertJsonToElement", getPropertyValueAsString("name", elementNode));
 
             Map<String, List<ExtensionAttribute>> attributes = flowElement.getAttributes();
+            List<CustomProperty> customProperties = ((UserTask) flowElement).getCustomProperties();
+
+            String nodestate = getPropertyValueAsString(NODE_STATE_KEY, elementNode);
+            if (StringUtils.isEmpty(nodestate)) {
+                LOGGER.debug("nodestate 属性为空，设置为默认值");
+                nodestate = "";
+            }
+            attributes.put(NODE_STATE_KEY, Collections.singletonList(
+                    ExtensionAttributeUtils.generate(NODE_STATE_KEY, nodestate)));
+
+            String requirepermissions = getPropertyValueAsString(REQUIRE_PERMISSIONS_KEY, elementNode);
+            if (StringUtils.isEmpty(requirepermissions)) {
+                LOGGER.debug("权限要求 属性为空，设置为默认值");
+                requirepermissions = "";
+            }
+            attributes.put(REQUIRE_PERMISSIONS_KEY, Collections.singletonList(
+                    ExtensionAttributeUtils.generate(NODE_STATE_KEY, requirepermissions)));
+
             String nodetype = getPropertyValueAsString(NODE_TYPE_KEY, elementNode);
             if (StringUtils.isEmpty(nodetype)) {
                 LOGGER.debug("nodetype 属性为空，设置为默认值");

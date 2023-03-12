@@ -1,6 +1,7 @@
 package com.guzt.flowable.modeler;
 
 import org.flowable.ui.modeler.conf.ApplicationConfiguration;
+import org.flowable.ui.modeler.service.BpmnDisplayJsonConverter;
 import org.flowable.ui.modeler.servlet.AppDispatcherServletConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -66,6 +66,7 @@ if (customActivityToolTips !== null && customActivityToolTips !== undefined && c
     customActivityToolTips = JSON.parse(customActivityToolTips);
 }
 
+
 // Support for custom opacity for activity backgrounds
 var customActivityBackgroundOpacity = modelDiv.attr('data-activity-opacity');
 
@@ -86,7 +87,6 @@ function _showTip(htmlNode, element)
             documentation = ''; // Show nothing if custom tool tips are enabled
         }
     }
-
     // Default tooltip, no custom tool tip set
     if (documentation === undefined) {
         var documentation = "";
@@ -293,6 +293,8 @@ request.success(function(data, textStatus, jqXHR) {
     {
         var element = modelElements[i];
         //try {
+        // 这里调用对应节点的_draw函数,例如_drawUserTask
+        console.log(element)
         var drawFunction = eval("_draw" + element.type);
         drawFunction(element);
         //} catch(err) {console.log(err);}

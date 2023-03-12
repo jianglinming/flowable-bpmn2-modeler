@@ -4,7 +4,7 @@ spring:
       name: webase
       url: jdbc:mysql://localhost:3306/flowable_test?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
       username: root
-      password: your_password
+      password: password
       driver-class-name: com.mysql.cj.jdbc.Driver
       filters: stat
       maxActive: 150

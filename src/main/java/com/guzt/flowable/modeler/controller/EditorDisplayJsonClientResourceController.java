@@ -24,7 +24,8 @@ public class EditorDisplayJsonClientResourceController {
 
     @RequestMapping(value = "/rest/models/{modelId}/model-json", method = RequestMethod.GET, produces = "application/json")
     public JsonNode getModelJSON(@PathVariable String modelId) {
-        return editorDisplayJsonClientResource.getModelJSON(modelId);
+        JsonNode modelJSON = editorDisplayJsonClientResource.getModelJSON(modelId);
+        return modelJSON;
     }
 
 }
