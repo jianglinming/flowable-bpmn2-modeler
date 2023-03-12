@@ -135,7 +135,7 @@ public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
                 requirepermissions = "";
             }
             attributes.put(REQUIRE_PERMISSIONS_KEY, Collections.singletonList(
-                    ExtensionAttributeUtils.generate(NODE_STATE_KEY, requirepermissions)));
+                    ExtensionAttributeUtils.generate(REQUIRE_PERMISSIONS_KEY, requirepermissions)));
 
             String nodetype = getPropertyValueAsString(NODE_TYPE_KEY, elementNode);
             if (StringUtils.isEmpty(nodetype)) {
