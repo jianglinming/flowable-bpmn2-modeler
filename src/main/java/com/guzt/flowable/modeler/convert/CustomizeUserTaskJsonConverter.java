@@ -161,7 +161,7 @@ public class CustomizeUserTaskJsonConverter extends UserTaskJsonConverter {
             attributes.put(END_FLAG_KEY, Collections.singletonList(
                     ExtensionAttributeUtils.generate(END_FLAG_KEY, endflag)));
 
-            String duedatedefinition = getProperty(DUEDATE_FLAG_KEY, elementNode).toString();
+            String duedatedefinition = getPropertyValueAsString(DUEDATE_FLAG_KEY, elementNode);
             if (StringUtils.isEmpty(duedatedefinition)) {
                 LOGGER.debug("duedatedefinition 属性为空，设置为默认值");
                 duedatedefinition = "";
