@@ -294,7 +294,8 @@ public class FlowableCookieFilter extends OncePerRequestFilter {
                 // request.getRequestURI().contains("/modeler/") ||
                 request.getRequestURI().contains("/modeler/redirect") ||
                 request.getRequestURI().contains("/modeler/index") ||
-                request.getRequestURI().contains("/modeler/app/logout");
+                request.getRequestURI().contains("/modeler/app/logout") ||
+                (request.getRequestURI().contains("/modeler/app/rest/models")&&!request.getRequestURI().contains("editor/json"));
     }
 
     protected String[] decodeCookie(String cookieValue) throws InvalidCookieException {
