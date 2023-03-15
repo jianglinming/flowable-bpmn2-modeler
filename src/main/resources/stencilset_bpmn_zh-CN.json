@@ -291,19 +291,6 @@
       ]
     },
     {
-      "name": "duedatedefinitionpackage",
-      "properties": [
-        {
-          "id": "duedatedefinition",
-          "type": "Complex",
-          "title": "到期时间",
-          "value": "",
-          "description": "用户任务到期时间.",
-          "popular": true
-        }
-      ]
-    },
-    {
       "name": "prioritydefinitionpackage",
       "properties": [
         {

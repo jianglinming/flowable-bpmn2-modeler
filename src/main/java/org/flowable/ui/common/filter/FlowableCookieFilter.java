@@ -279,7 +279,9 @@ public class FlowableCookieFilter extends OncePerRequestFilter {
     }
 
     protected boolean skipAuthenticationCheck(HttpServletRequest request) {
-        return request.getRequestURI().endsWith(".css") ||
+        String method = request.getMethod();
+
+        return "GET".equals(method)&&(request.getRequestURI().endsWith(".css") ||
                 request.getRequestURI().endsWith(".js") ||
                 request.getRequestURI().endsWith(".json") ||
                 request.getRequestURI().endsWith(".ico") ||
@@ -295,7 +297,7 @@ public class FlowableCookieFilter extends OncePerRequestFilter {
                 request.getRequestURI().contains("/modeler/redirect") ||
                 request.getRequestURI().contains("/modeler/index") ||
                 request.getRequestURI().contains("/modeler/app/logout") ||
-                (request.getRequestURI().contains("/modeler/app/rest/models")&&!request.getRequestURI().contains("editor/json"));
+                request.getRequestURI().contains("/modeler/app/rest/models"));
     }
 
     protected String[] decodeCookie(String cookieValue) throws InvalidCookieException {
